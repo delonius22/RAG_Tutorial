@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "rag-tutorial"
+version = "0.1.0"
+description = "A RAG tutorial attemopting to log into logscale and create a better search engine"
+authors = ["DeAngelo Floyd <135054919+delonius22@users.noreply.github.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+"requests," = "logging,pydantic"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
