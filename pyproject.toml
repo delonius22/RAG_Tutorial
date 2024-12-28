@@ -1,14 +1,19 @@
 [tool.poetry]
 name = "rag-tutorial"
 version = "0.1.0"
-description = "A RAG tutorial attemopting to log into logscale and create a better search engine"
+description = ""
 authors = ["DeAngelo Floyd <135054919+delonius22@users.noreply.github.com>"]
-license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.13"
-"requests," = "logging,pydantic"
+rank-bm25 = "^0.2.2"
+pydantic = "^2.10.4"
+faiss-cpu = "^1.9.0.post1"
+httpx = "^0.28.1"
+nltk = "^3.9.1"
+scikit-learn = "^1.6.0"
+atlassian-python-api = "^3.41.16"
 
 
 [build-system]

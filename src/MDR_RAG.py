@@ -7,13 +7,13 @@ import asyncio
 from urllib.parse import urljoin, urlparse
 import time
 from robots import RobotsParser
-import mysql.connector
 from abc import ABC, abstractmethod
 from contextlib import contextmanager
 from atlassian import Confluence
 import faiss
 import numpy as np
-from sentence_transformers import SentenceTransformer
+# from sentence_transformers import SentenceTransformer
+from gensim.models.doc2vec import Doc2Vec, TaggedDocument
 from sklearn.preprocessing import normalize
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -31,8 +31,8 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from gensim.summarization import keywords
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+# logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+# logger = logging.getLogger(__name__)
 
 
 
@@ -356,17 +356,9 @@ class EmbeddingModule:
             Defaults to "sentence-transformers/all-mpnet-base-v2".
     """
 
-    def __init__(self, model_name:str = "sentence-transformers/all-mpnet-base-v2"):
-        """
-        Initialize a EmbeddingModule instance with a specified sentence transformer model.
-        Args:
-            model_name (str, optional): The name or path of the sentence transformer model to use. 
-                Defaults to "sentence-transformers/all-mpnet-base-v2".
-        Attributes:
-            model: The loaded SentenceTransformer model instance used for text embeddings.
-        """
-        
-        self.model = SentenceTransformer(model_name)
+    def __init__(self):
+        pass
+      
 
     def generate_embeddings(self, chunks: List[DocumentChunk]) -> List[DocumentChunk]:
         """
@@ -385,9 +377,9 @@ class EmbeddingModule:
         """
 
         texts = [chunk.content for chunk in chunks]
-
+        model = Doc2Vec(texts,vector_size=100, window=5, min_count=2, epochs=40)
         #embedding in batches
-        embeddings = self.model.encode(texts, batch_size = 32, show_progress_bar=True)
+        embeddings = model.infer_vector(model.docvecs)
 
         #joining embeddings with chunks
         for chunk, embedding in zip(chunks, embeddings):
@@ -925,7 +917,7 @@ class LogscaleScraper:
         if sidebar:
             active = sidebar.find("a",{"aria-current":"page"})
             if active:
-                section = activie.find_parent("div",{"role":"group"})
+                section = active.find_parent("div",{"role":"group"})
                 if section:
                     section = section.get("aria-label","")
         return section
