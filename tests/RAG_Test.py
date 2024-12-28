@@ -3,30 +3,18 @@ from unittest.mock import Mock, patch
 from typing import List, Tuple
 
 # Import the classes we want to test
-from src.MDR_RAG import (
-    ConfluenceConnector,
-    DocumentProcessor,
-    EmbeddingModule,
-    FAISSIndex,
-    ContextualReranker,
-    QueryExpansionModule,
-    DatabaseManager,
-    MultiStageRAG,
-    DocumentChunk,
-    RankedDocument,
-    ConfluenceMetadata,
-)
+import MDR_RAG
 
 @pytest.fixture
 def mock_components():
     return {
-        'confluence_conn': Mock(spec=ConfluenceConnector),
-        'document_processor': Mock(spec=DocumentProcessor),
-        'embedding_module': Mock(spec=EmbeddingModule),
-        'db_manager': Mock(spec=DatabaseManager),
-        'context_reranker': Mock(spec=ContextualReranker),
-        'faiss_index': Mock(spec=FAISSIndex),
-        'query_expansion': Mock(spec=QueryExpansionModule),
+        'confluence_conn': Mock(spec=MDR_RAG.ConfluenceConnector),
+        'document_processor': Mock(spec=MDR_RAG.DocumentProcessor),
+        'embedding_module': Mock(spec=MDR_RAG.EmbeddingModule),
+        'db_manager': Mock(spec=MDR_RAG.DatabaseManager),
+        'context_reranker': Mock(spec=MDR_RAG.ContextualReranker),
+        'faiss_index': Mock(spec=MDR_RAG.FAISSIndex),
+        'query_expansion': Mock(spec=MDR_RAG.QueryExpansionModule),
         'bm25_ranker': Mock()  # BM25Ranking doesn't have a clear spec in the provided code
     }
 
