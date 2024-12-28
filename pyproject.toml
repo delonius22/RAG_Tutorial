@@ -14,6 +14,7 @@ httpx = "^0.28.1"
 nltk = "^3.9.1"
 scikit-learn = "^1.6.0"
 atlassian-python-api = "^3.41.16"
+pytest = "^8.3.4"
 
 
 [build-system]
